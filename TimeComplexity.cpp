@@ -24,8 +24,8 @@ void createVector(vector<T>& dataType, unsigned long long num)
 	//cout << endl; 
 }
 
-
-void bubbleSort(vector<unsigned long long> nums)
+template <typename T>
+void bubbleSort(vector<T> nums)
 {
 	//test adding additionl brackets within function for scope of SimpleTimer
 	SimpleTimer timer("Bubble Sort");
@@ -38,7 +38,7 @@ void bubbleSort(vector<unsigned long long> nums)
 		{
 			if (nums[i] > nums[i + 1])
 			{
-				int tmp = nums[i];
+				T tmp = nums[i];
 				nums[i] = nums[i + 1];
 				nums[i + 1] = tmp;
 				swapped = true;
