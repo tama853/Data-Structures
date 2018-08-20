@@ -7,7 +7,7 @@ SimpleTimer::SimpleTimer()
 	start = highResClock::now();
 }
 
-SimpleTimer::SimpleTimer(const char* msg)
+SimpleTimer::SimpleTimer(string msg)
 {
 	message = msg;
 	start = highResClock::now(); //start after any addiional work

@@ -16,7 +16,7 @@ public:
 	std::chrono::duration<double> elapsed;
 
 	SimpleTimer();
-	SimpleTimer(const char*);
+	SimpleTimer(string);
 	~SimpleTimer();
 };
 
