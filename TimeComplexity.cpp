@@ -17,9 +17,16 @@ void createVector(vector<T>& dataType, unsigned long long num)
 		// add random strings
 		// add random objects
 	}
-	//for (T tmp : dataType)
-	//	cout << tmp << " ";
-	//cout << endl; 
+}
+
+template <typename T>
+void print(const vector<T>& dataType)
+{
+	for (T tmp : dataType)
+	{
+		cout << tmp << " ";
+	}
+	cout << endl;
 }
 
 template <typename T>
@@ -42,9 +49,6 @@ void bubbleSort(vector<T> nums)
 			}
 		}
 	}
-//	for (unsigned long long tmp : nums)
-//		cout << tmp << " ";
-//	cout << endl;
 }
 
 template <typename T>
@@ -53,7 +57,7 @@ void selectionSort(vector<T> nums)
 	SimpleTimer timer("Selection Sort");
 	for (unsigned long long i = 0; i < nums.size(); i++)
 	{
-		// find index of smallest value
+		// find index of smallest value of remaining elements
 		int indexSmallest = i;
 		for (int j = i + 1; j < nums.size(); j++)
 		{
@@ -72,6 +76,7 @@ void selectionSort(vector<T> nums)
 void insertionSort(vector<unsigned long long> nums)
 {
 	SimpleTimer timer("Insertion Sort");
+
 }
 
 void quickSort(vector<unsigned long long> nums)
