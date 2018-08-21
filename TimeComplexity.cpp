@@ -46,20 +46,25 @@ void bubbleSort(vector<T> nums, bool sorted = false)
 		timer = new SimpleTimer("Bubble Sort Unsorted");
 	}
 
-	bool swapped = true;
+	// using while loop on sorted lists bubble sort is O(N)
+	//bool swapped = true;
+    //while (swapped)
 
-	while (swapped)
+	for (unsigned int i = 0; i < nums.size() - 1; i++)
 	{
-		swapped = false;
-		for (unsigned int i = 0; i < nums.size() - 1; i++)
+		//swapped = false;
+
+		for (unsigned int j = 0; j < nums.size() - 1 - i; j++)
 		{
-			if (nums[i] > nums[i + 1])
+			if (nums[j] > nums[j + 1])
 			{
 				// swap
-				T tmp = nums[i];
-				nums[i] = nums[i + 1];
-				nums[i + 1] = tmp;
-				swapped = true;
+				T tmp = nums[j];
+				nums[j] = nums[j + 1];
+				nums[j + 1] = tmp;
+				//swapped = true;
+				// can test with references
+				// swap(&nums[j], &nums[j + 1]);
 			}
 		}
 	}
@@ -210,7 +215,7 @@ int main()
 {
 	// set size of vector
 	
-	unsigned int size = 10000;
+	unsigned int size = 30000;
 	vector<unsigned int> nums;
 	vector<unsigned int> numSorted;
 	//vector<string> strings;
@@ -221,7 +226,7 @@ int main()
 	
 	// unsorted list
 	createVector(nums, size);
-	createVector(numSorted, size);
+	numSorted = nums;
 	sort(numSorted.begin(), numSorted.end());
 
 	// add average of sorting times
