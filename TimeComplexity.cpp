@@ -10,29 +10,20 @@ using namespace std;
 template <typename T>
 struct Test
 {
+	// defaults to 100
 	unsigned int size;
+	SimpleTimer* timer;
 	vector<T> numSorted;
 	vector<T> numUnsorted;
-	vector<T> nums; // temp that gets chosen based on sorting style
+	vector<T> nums; // temp that gets set within Set()
 
-	SimpleTimer* timer;
-
-	Test(unsigned int _size)
+	Test(unsigned int _size = 100)
 	{
 		size = _size;
 		timer = nullptr;
 		createVector(numUnsorted, size);
 		numSorted = numUnsorted;
 		sort(numSorted.begin(), numSorted.end());
-	}
-
-	~Test()
-	{
-	//	if (timer != nullptr)
-	//	{
-	//		delete timer;
-			//timer = nullptr;
-	//	}
 	}
 
 	void createVector(vector<T>& dataType, unsigned int num)
@@ -56,7 +47,7 @@ struct Test
 		cout << endl;
 	}
 
-	void setNum(bool sorted = false)
+	void Set(bool sorted = false)
 	{
 		if (sorted)
 		{
@@ -72,7 +63,7 @@ struct Test
 
 	void bubbleSort(bool sorted = false)
 	{
-		setNum(sorted);
+		Set(sorted);
 		// using while loop on sorted lists bubble sort is O(N)
 		//bool swapped = true;
 		//while (swapped)
@@ -99,7 +90,7 @@ struct Test
 
 	void selectionSort(bool sorted = false)
 	{
-		setNum(sorted);
+		Set(sorted);
 
 		for (unsigned int i = 0; i < nums.size(); i++)
 		{
@@ -123,7 +114,7 @@ struct Test
 
 	void insertionSort(bool sorted = false)
 	{
-		setNum(sorted);
+		Set(sorted);
 
 		for (unsigned int i = 1; i < nums.size(); i++)
 		{
@@ -167,26 +158,26 @@ struct Test
 
 	void recursiveQuickSort(unsigned int low, unsigned int high)
 	{
-		if (low >= high)
+		if (low <= high)
 		{
-			return;
+			unsigned int pivot = nums[(low + high) / 2];
+			unsigned int index = partition(low, high, pivot);
+			recursiveQuickSort(low, index - 1);
+			recursiveQuickSort(index, high);
 		}
-
-		unsigned int pivot = nums[(low + high) / 2];
-		unsigned int index = partition(low, high, pivot);
-		recursiveQuickSort(low, index - 1);
-		recursiveQuickSort(index, high);
 	}
 
 	void quickSort(bool sorted = false)
 	{
-		setNum(sorted);
+		Set(sorted);
 		recursiveQuickSort(0, nums.size() - 1);
+		cout << "Quick Sort" << endl;
+		delete timer;
 	}
 			
 	void mergeSort(bool sorted = false)
 	{
-		setNum(sorted);
+		Set(sorted);
 
 		cout << "Merge Sort" << endl;
 		delete timer;
@@ -194,7 +185,7 @@ struct Test
 
 	void shellSort(bool sorted = false)
 	{
-		setNum(sorted);
+		Set(sorted);
 
 		cout << "Shell Sort" << endl;
 		delete timer;
@@ -216,7 +207,7 @@ struct Test
 
 	void linearSearch(bool sorted = false)
 	{
-		setNum(sorted);
+		Set(sorted);
 
 		cout << "Linear Search" << endl;
 		delete timer;
@@ -224,7 +215,7 @@ struct Test
 
 	void heapSort(bool sorted = false)
 	{
-		setNum(sorted);
+		Set(sorted);
 
 		cout << "Heap Sort" << endl;
 		delete timer;
