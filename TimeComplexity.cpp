@@ -8,264 +8,240 @@ using namespace std;
 
 
 template <typename T>
-void createVector(vector<T>& dataType, unsigned int num)
+struct Test
 {
-	srand(time(0));
+	unsigned int size;
+	vector<T> numSorted;
+	vector<T> numUnsorted;
+	vector<T> nums; // temp that gets chosen based on sorting style
 
-	for (unsigned int i = 0; i < num; i++)
+	SimpleTimer* timer;
+
+	Test(unsigned int _size)
 	{
-		dataType.push_back(rand() % num); //random numbers
-		// add random strings
-		// add random objects
-	}
-}
-
-
-
-template <typename T>
-void print(const vector<T>& dataType)
-{
-	for (T tmp : dataType)
-	{
-		cout << tmp << " ";
-	}
-	cout << endl;
-}
-
-template <typename T>
-void bubbleSort(vector<T> nums, bool sorted = false)
-{
-	SimpleTimer* timer = nullptr;
-
-	if (sorted)
-	{
-		timer = new SimpleTimer("Bubble Sort Sorted");
-	}
-	else
-	{
-		timer = new SimpleTimer("Bubble Sort Unsorted");
+		size = _size;
+		timer = nullptr;
+		createVector(numUnsorted, size);
+		numSorted = numUnsorted;
+		sort(numSorted.begin(), numSorted.end());
 	}
 
-	// using while loop on sorted lists bubble sort is O(N)
-	//bool swapped = true;
-    //while (swapped)
-	for (unsigned int i = 0; i < nums.size() - 1; i++)
+	~Test()
 	{
-		//swapped = false;
-		for (unsigned int j = 0; j < nums.size() - 1 - i; j++)
+	//	if (timer != nullptr)
+	//	{
+	//		delete timer;
+			//timer = nullptr;
+	//	}
+	}
+
+	void createVector(vector<T>& dataType, unsigned int num)
+	{
+		srand(time(0));
+
+		for (unsigned int i = 0; i < num; i++)
 		{
-			if (nums[j] > nums[j + 1])
+			dataType.push_back(rand() % num); //random numbers
+			// add random strings
+			// add random objects
+		}
+	}
+
+	void print(const vector<T>& dataType)
+	{
+		for (T tmp : dataType)
+		{
+			cout << tmp << " ";
+		}
+		cout << endl;
+	}
+
+	void setNum(bool sorted = false)
+	{
+		if (sorted)
+		{
+			nums = numSorted;
+			timer = new SimpleTimer("Sorted ");
+		}
+		else
+		{
+			nums = numUnsorted;
+			timer = new SimpleTimer("Unsorted ");
+		}
+	}
+
+	void bubbleSort(bool sorted = false)
+	{
+		setNum(sorted);
+		// using while loop on sorted lists bubble sort is O(N)
+		//bool swapped = true;
+		//while (swapped)
+		for (unsigned int i = 0; i < nums.size() - 1; i++)
+		{
+			//swapped = false;
+			for (unsigned int j = 0; j < nums.size() - 1 - i; j++)
+			{
+				if (nums[j] > nums[j + 1])
+				{
+					// swap
+					T tmp = nums[j];
+					nums[j] = nums[j + 1];
+					nums[j + 1] = tmp;
+					//swapped = true;
+					// can test with references
+					// swap(&nums[j], &nums[j + 1]);
+				}
+			}
+		}
+		cout << "Bubble Sort" << endl;
+		delete timer;
+	}
+
+	void selectionSort(bool sorted = false)
+	{
+		setNum(sorted);
+
+		for (unsigned int i = 0; i < nums.size(); i++)
+		{
+			// find index of smallest value of remaining elements
+			int indexSmallest = i;
+			for (int j = i + 1; j < nums.size(); j++)
+			{
+				if (nums[j] < nums[indexSmallest])
+				{
+					indexSmallest = j;
+				}
+			}
+			// swap
+			T temp = nums[i];
+			nums[i] = nums[indexSmallest];
+			nums[indexSmallest] = temp;
+		}
+		cout << "Selction Sort" << endl;
+		delete timer;
+	}
+
+	void insertionSort(bool sorted = false)
+	{
+		setNum(sorted);
+
+		for (unsigned int i = 1; i < nums.size(); i++)
+		{
+			for (unsigned int j = i; (j > 0) && (nums[j] < nums[j - 1]); j--)
 			{
 				// swap
-				T tmp = nums[j];
-				nums[j] = nums[j + 1];
-				nums[j + 1] = tmp;
-				//swapped = true;
-				// can test with references
-				// swap(&nums[j], &nums[j + 1]);
+				T temp = nums[j];
+				nums[j] = nums[j - 1];
+				nums[j - 1] = temp;
 			}
 		}
-	}
-	delete timer;
-}
-
-template <typename T>
-void selectionSort(vector<T> nums, bool sorted = false)
-{
-	SimpleTimer* timer = nullptr;
-
-	if (sorted)
-	{
-		timer = new SimpleTimer("Selection Sort Sorted");
-	}
-	else
-	{
-		timer = new SimpleTimer("Selection Sort Unsorted");
+		cout << "Insertion Sort" << endl;
+		delete timer;
 	}
 
-	for (unsigned int i = 0; i < nums.size(); i++)
+	unsigned int partition(unsigned int low, unsigned int high, unsigned int pivot)
 	{
-		// find index of smallest value of remaining elements
-		int indexSmallest = i;
-		for (int j = i + 1; j < nums.size(); j++)
+		while (low <= high)
 		{
-			if (nums[j] < nums[indexSmallest])
+			while (nums[low] < pivot)
 			{
-				indexSmallest = j;
+				low++;
+			}
+
+			while (nums[high] > pivot)
+			{
+				high--;
+			}
+
+			if (low <= high)
+			{
+				T temp = nums[low];
+				nums[low] = high;
+				nums[high] = temp;
+				low++;
+				high--;
 			}
 		}
-		// swap
-		T temp = nums[i];
-		nums[i] = nums[indexSmallest];
-		nums[indexSmallest] = temp;
-	}
-	delete timer;
-}
-
-template <typename T>
-void insertionSort(vector<T> nums, bool sorted = false)
-{
-	SimpleTimer* timer = nullptr;
-
-	if (sorted)
-	{
-		timer = new SimpleTimer("Insertion Sort Sorted");
-	}
-	else
-	{
-		timer = new SimpleTimer("Insertion Sort Unsorted");
+		return low;
 	}
 
-	for (unsigned int i = 1; i < nums.size(); i++)
+	void recursiveQuickSort(unsigned int low, unsigned int high)
 	{
-		for (unsigned int j = i; (j > 0) && (nums[j] < nums[j - 1]); j--)
+		if (low >= high)
 		{
-			// swap
-			T temp = nums[j];
-			nums[j] = nums[j - 1];
-			nums[j - 1] = temp;
-		}
-	}
-	delete timer;
-}
-
-template <typename T>
-void quickSort(vector<T> nums, bool sorted = false)
-{
-	SimpleTimer* timer = nullptr;
-
-	if (sorted)
-	{
-		timer = new SimpleTimer("Quick Sorted");
-	}
-	else
-	{
-		timer = new SimpleTimer("Quick Unsorted");
-	}
-		
-
-}
-
-template <typename T>
-void recursiveQuickPartition(vector<T>& nums, unsigned int low, unsigned int high, unsigned int pivot)
-{
-	while (low <= high)
-	{
-		while (nums[left] < pivot)
-		{
-			left++;
+			return;
 		}
 
-		while (nums[high] > pivot)
+		unsigned int pivot = nums[(low + high) / 2];
+		unsigned int index = partition(low, high, pivot);
+		recursiveQuickSort(low, index - 1);
+		recursiveQuickSort(index, high);
+	}
+
+	void quickSort(bool sorted = false)
+	{
+		setNum(sorted);
+		recursiveQuickSort(0, nums.size() - 1);
+	}
+			
+	void mergeSort(bool sorted = false)
+	{
+		setNum(sorted);
+
+		cout << "Merge Sort" << endl;
+		delete timer;
+	}
+
+	void shellSort(bool sorted = false)
+	{
+		setNum(sorted);
+
+		cout << "Shell Sort" << endl;
+		delete timer;
+	}
+
+	void binarySearch(bool sorted = false)
+	{
+		SimpleTimer* timer = nullptr;
+
+		if (sorted)
 		{
-			high--;
+			timer = new SimpleTimer("Binary Search");
 		}
-
-		if (low <= high)
+		else
 		{
-			T temp = nums[low];
-			nums[low] = high;
-			nums[high] = temp;
-			low++;
-			high--;
+			cout << "Not possible!" << endl;
 		}
 	}
-	return low;
-}
 
-template <typename T>
-void mergeSort(vector<T> nums, bool sorted = false)
-{
-	SimpleTimer* timer = nullptr;
+	void linearSearch(bool sorted = false)
+	{
+		setNum(sorted);
 
-	if (sorted)
-	{
-		timer = new SimpleTimer("Merge Sorted");
+		cout << "Linear Search" << endl;
+		delete timer;
 	}
-	else
-	{
-		timer = new SimpleTimer("Merge Unsorted");
-	}
-}
 
-template <typename T>
-void shellSort(vector<T> nums, bool sorted = false)
-{
-	SimpleTimer* timer = nullptr;
+	void heapSort(bool sorted = false)
+	{
+		setNum(sorted);
 
-	if (sorted)
-	{
-		timer = new SimpleTimer("Shell Sorted");
+		cout << "Heap Sort" << endl;
+		delete timer;
 	}
-	else
-	{
-		timer = new SimpleTimer("Shell Unsorted");
-	}
-}
+};
 
-template <typename T>
-void binarySearch(vector<T> nums, bool sorted = false)
-{
-	SimpleTimer* timer = nullptr;
-
-	if (sorted)
-	{
-		timer = new SimpleTimer("Binary Search");
-	}
-	else
-	{
-		cout << "Not possible!" << endl;
-	}
-}
-
-template <typename T>
-void linearSearch(vector<T> nums, bool sorted = false)
-{
-	SimpleTimer* timer = nullptr;
-
-	if (sorted)
-	{
-		timer = new SimpleTimer("Linear Search Sorted");
-	}
-	else
-	{
-		timer = new SimpleTimer("Linear Search Unsorted");
-	}
-}
-
-template <typename T>
-void heapSort(vector<T> nums, bool sorted = false)
-{
-	SimpleTimer* timer = nullptr;
-
-	if (sorted)
-	{
-		timer = new SimpleTimer("Heap Sorted");
-	}
-	else
-	{
-		timer = new SimpleTimer("Heap Unsorted");
-	}
-}
 
 int main()
 {
-	// set size of vector
-	
-	unsigned int size = 30000;
-	vector<unsigned int> nums;
-	vector<unsigned int> numSorted;
+	unsigned sizeOfList = 30000;
+	Test<unsigned int> tester(sizeOfList);
+
 	//vector<string> strings;
 	//vector<const char*> char;
 	//vector<unsigned long long*> longPtr;
 	//vector<floats> floats;
 	//vector<objects> objects;
-	
-	// unsorted list
-	createVector(nums, size);
-	numSorted = nums;
-	sort(numSorted.begin(), numSorted.end());
-	
 	
 	// add average of sorting times
 	// add fastest, slowest, fastest when sorted, and fastest when unsorted
@@ -323,41 +299,43 @@ int main()
 		Cubesort	Ω(n)	Θ(n log(n))	O(n log(n))	O(n)
 		*/
 
-	bubbleSort(nums);
+	tester.bubbleSort();
 	// Time - O( N^2 ), Space -
 	// Each iteration slowly causes the list to be sorted by 
 	// bubbling values in ascedning/descending order.
 	
-	selectionSort(nums);
+	tester.selectionSort();
+
 	// Time - O( N^2 ), Space - 
 	// Treats the input as 2 parts, sorted and unsorted. Selects the proper 
 	// next value from unsorted part to move into the sorted part.
 
-	insertionSort(nums); 
+	tester.insertionSort(); 
 	// Time - O( N^2 ) but can act like O( N ) on sorted or partially sorted list, Space - 
 	// Likd selection sort, it treats the input as 2 parts. It then repeatedly 
 	// inserts the next value into the correct sorted location.
 
+	tester.quickSort();
 	// Time - O(), Space - 
-	quickSort(nums);
 	// Chooses a pivot and then repeatedly partitions the list into high and low parts, 
 	// each part unsorted, and then recursively sorts each part. 
 
-	// Time - O( Nlog(N) ), Space - 
 	// mergeSort(nums);
+	// Time - O( Nlog(N) ), Space - 
 
-	// Time - O( ), Space - 
 	// shellSort(nums);
+	// Time - O( ), Space - 
 
-	// Time - O( log(N) ), Space - 
 	// binarySearch(nums);
+	// Time - O( log(N) ), Space - 
 
-	// Time - O( N ), Space - 
 	// linearSearch(nums);
+	// Time - O( N ), Space - 
 
 	// sorted list
-	bubbleSort(numSorted, true);
-	selectionSort(numSorted, true);
-	insertionSort(numSorted, true);
+	tester.bubbleSort(true);
+	tester.selectionSort(true);
+	tester.insertionSort(true);
+	tester.quickSort(true);
 	return 0;
 }
