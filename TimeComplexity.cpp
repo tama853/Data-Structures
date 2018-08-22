@@ -52,12 +52,12 @@ struct Test
 		if (sorted)
 		{
 			nums = numSorted;
-			timer = new SimpleTimer("Sorted ");
+			timer = new SimpleTimer("    Sorted   ");
 		}
 		else
 		{
 			nums = numUnsorted;
-			timer = new SimpleTimer("Unsorted ");
+			timer = new SimpleTimer("    Unsorted ");
 		}
 	}
 
@@ -132,7 +132,9 @@ struct Test
 
 	unsigned int partition(unsigned int left, unsigned int right, unsigned int pivot)
 	{
-		while (left <= right)
+		bool done = false;
+
+		while (!done)
 		{
 			while (nums[left] < pivot)
 			{
@@ -144,31 +146,37 @@ struct Test
 				right--;
 			}
 
-			if (left <= right)
+			// guards against going out of bounds
+			if (left >= right)
+			{
+				done = true;
+			}
+			else
 			{
 				T temp = nums[left];
 				nums[left] = nums[right];
 				nums[right] = temp;
-				left++;
 
-				if (right != 0)
-				{
-				right--; // todo fix later
-				}
+				left++;
+				right--;
 			}
 		}
-		return left;
+		return right;
 	}
 
 	void recursiveQuickSort(unsigned int left, unsigned int right)
 	{
-		if (left < right)
+		if (left >= right)
 		{
-			unsigned int pivot = nums[left + ((right - left) / 2)];  // try differnt pivots
-			unsigned int partitionIndex = partition(left, right, pivot);
-			recursiveQuickSort(left, partitionIndex - 1);
-			recursiveQuickSort(partitionIndex, right);
+			return;
 		}
+
+		unsigned int midPoint = left + ((right - left) / 2);  // try differnt pivots
+		unsigned int pivot = nums[midPoint];
+		unsigned int partitionIndex = partition(left, right, pivot);
+
+		recursiveQuickSort(left, partitionIndex); // maybe partitionIndex - 1
+		recursiveQuickSort(partitionIndex + 1, right); // maybe partitionIndex
 	}
 
 	void quickSort(bool sorted = false)
@@ -231,7 +239,7 @@ struct Test
 
 int main()
 {
-	const unsigned sizeOfList = 5;
+	const unsigned sizeOfList = 30000;
 	Test<unsigned int> tester(sizeOfList);
 
 	//vector<string> strings;
@@ -296,12 +304,12 @@ int main()
 		Cubesort	Ω(n)	Θ(n log(n))	O(n log(n))	O(n)
 		*/
 
-	//tester.bubbleSort();
+	tester.bubbleSort();
 	// Time - O( N^2 ), Space -
 	// Each iteration slowly causes the list to be sorted by 
 	// bubbling values in ascedning/descending order.
 	
-	//tester.selectionSort();
+	tester.selectionSort();
 
 	// Time - O( N^2 ), Space - 
 	// Treats the input as 2 parts, sorted and unsorted. Selects the proper 
