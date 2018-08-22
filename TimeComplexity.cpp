@@ -262,31 +262,8 @@ int main()
 		// O( Nlog(N) ) - Log-Linear
 		// O( N^2 ) - Quaudratic
 		// O( c^N ) - Exponential
-		//
-		//
-		// Common Data Structure Operations
-
-		/*Data Structure	Time Complexity	Space Complexity
-		Average	Worst	Worst
-		Access	Search	Insertion	Deletion		Access		Search													Insertion	    Deletion	
-		Array	Θ(1)	Θ(n)	Θ(n)	Θ(n)	O(1)	O(n)	O(n)															O(n)		O(n)
-		Stack	Θ(n)	Θ(n)	Θ(1)	Θ(1)	O(n)	O(n)	O(1)	O(1)																O(n)
-		Queue	Θ(n)	Θ(n)	Θ(1)	Θ(1)	O(n)	O(n)	O(1)	O(1)																O(n)
-		Singly-Linked List	Θ(n)	Θ(n)	Θ(1)	Θ(1)	O(n)	O(n)	O(1)	O(1)													O(n)
-		Doubly-Linked List	Θ(n)	Θ(n)	Θ(1)	Θ(1)	O(n)	O(n)	O(1)	O(1)													O(n)
-		Skip List	Θ(log(n))	Θ(log(n))	Θ(log(n))	Θ(log(n))	O(n)	O(n)	O(n)	O(n)									 O(n log(n))
-		Hash Table	N/A	Θ(1)	Θ(1)	Θ(1)	N/A	O(n)	O(n)	O(n)	O(n)
-		Binary Search Tree	Θ(log(n))	Θ(log(n))	Θ(log(n))	Θ(log(n))	O(n)	O(n)	O(n)	O(n)									O(n)
-		Cartesian Tree	N/A	Θ(log(n))	Θ(log(n))	Θ(log(n))	N/A	O(n)	O(n)	O(n)	O(n)
-		B-Tree	Θ(log(n))	Θ(log(n))	Θ(log(n))	Θ(log(n))	O(log(n))	O(log(n))	O(log(n))	O(log(n))								O(n)
-		Red-Black Tree	Θ(log(n))	Θ(log(n))	Θ(log(n))	Θ(log(n))	O(log(n))	O(log(n))	O(log(n))	O(log(n))						O(n)
-		Splay Tree	N/A	Θ(log(n))	Θ(log(n))	Θ(log(n))	N/A	O(log(n))	O(log(n))	O(log(n))	O(n)
-		AVL Tree	Θ(log(n))	Θ(log(n))	Θ(log(n))	Θ(log(n))	O(log(n))	O(log(n))	O(log(n))	O(log(n))							O(n)
-		KD Tree	Θ(log(n))	Θ(log(n))	Θ(log(n))	Θ(log(n))	O(n)	O(n)	O(n)	O(n)	O(n)
-		*/
-
-		/*	Array Sorting Algorithms
-
+		 
+		    /*############Algorithms############
 		Algorithm	Time Complexity	Space Complexity
 		Best	Average	Worst	Worst
 		Quicksort	Ω(n log(n))	Θ(n log(n))	O(n^2)	O(log(n))
