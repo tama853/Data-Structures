@@ -10,29 +10,29 @@ using namespace std;
 template <typename T>
 struct Test
 {
-	// defaults to 100
+	// defaults to 1000
 	unsigned int size;
 	SimpleTimer* timer;
 	vector<T> numSorted;
 	vector<T> numUnsorted;
 	vector<T> nums; // temp that gets set within Set()
 
-	Test(unsigned int _size = 100)
+	Test(const unsigned int size = 1000) : size(size)
 	{
-		size = _size;
+		this->size = size;
 		timer = nullptr;
-		createVector(numUnsorted, size);
-		numSorted = numUnsorted;
-		sort(numSorted.begin(), numSorted.end());
+		createVector(numUnsorted, this->size);
+		numSorted = numUnsorted; // making sure they both will have the same values in list between testing
+		sort(numSorted.begin(), numSorted.end()); // sorts list for use in sorted testing
 	}
 
-	void createVector(vector<T>& dataType, unsigned int num)
+	void createVector(vector<T>& dataType, unsigned int _size)
 	{
 		srand(time(0));
 
-		for (unsigned int i = 0; i < num; i++)
+		for (unsigned int i = 0; i < _size; i++)
 		{
-			dataType.push_back(rand() % num); //random numbers
+			dataType.push_back(rand() % _size); //random numbers
 			// add random strings
 			// add random objects
 		}
@@ -130,40 +130,44 @@ struct Test
 		delete timer;
 	}
 
-	unsigned int partition(unsigned int low, unsigned int high, unsigned int pivot)
+	unsigned int partition(unsigned int left, unsigned int right, unsigned int pivot)
 	{
-		while (low <= high)
+		while (left <= right)
 		{
-			while (nums[low] < pivot)
+			while (nums[left] < pivot)
 			{
-				low++;
+				left++;
 			}
 
-			while (nums[high] > pivot)
+			while (nums[right] > pivot)
 			{
-				high--;
+				right--;
 			}
 
-			if (low <= high)
+			if (left <= right)
 			{
-				T temp = nums[low];
-				nums[low] = high;
-				nums[high] = temp;
-				low++;
-				high--;
+				T temp = nums[left];
+				nums[left] = nums[right];
+				nums[right] = temp;
+				left++;
+
+				if (right != 0)
+				{
+				right--; // todo fix later
+				}
 			}
 		}
-		return low;
+		return left;
 	}
 
-	void recursiveQuickSort(unsigned int low, unsigned int high)
+	void recursiveQuickSort(unsigned int left, unsigned int right)
 	{
-		if (low <= high)
+		if (left < right)
 		{
-			unsigned int pivot = nums[(low + high) / 2];
-			unsigned int index = partition(low, high, pivot);
-			recursiveQuickSort(low, index - 1);
-			recursiveQuickSort(index, high);
+			unsigned int pivot = nums[left + ((right - left) / 2)];  // try differnt pivots
+			unsigned int partitionIndex = partition(left, right, pivot);
+			recursiveQuickSort(left, partitionIndex - 1);
+			recursiveQuickSort(partitionIndex, right);
 		}
 	}
 
@@ -172,7 +176,9 @@ struct Test
 		Set(sorted);
 		recursiveQuickSort(0, nums.size() - 1);
 		cout << "Quick Sort" << endl;
-		delete timer;
+
+		// avoids trying to unallocate a pointer that wasn't allocated
+			delete timer;
 	}
 			
 	void mergeSort(bool sorted = false)
@@ -225,7 +231,7 @@ struct Test
 
 int main()
 {
-	unsigned sizeOfList = 30000;
+	const unsigned sizeOfList = 5;
 	Test<unsigned int> tester(sizeOfList);
 
 	//vector<string> strings;
@@ -290,18 +296,18 @@ int main()
 		Cubesort	Ω(n)	Θ(n log(n))	O(n log(n))	O(n)
 		*/
 
-	tester.bubbleSort();
+	//tester.bubbleSort();
 	// Time - O( N^2 ), Space -
 	// Each iteration slowly causes the list to be sorted by 
 	// bubbling values in ascedning/descending order.
 	
-	tester.selectionSort();
+	//tester.selectionSort();
 
 	// Time - O( N^2 ), Space - 
 	// Treats the input as 2 parts, sorted and unsorted. Selects the proper 
 	// next value from unsorted part to move into the sorted part.
 
-	tester.insertionSort(); 
+	tester.insertionSort();
 	// Time - O( N^2 ) but can act like O( N ) on sorted or partially sorted list, Space - 
 	// Likd selection sort, it treats the input as 2 parts. It then repeatedly 
 	// inserts the next value into the correct sorted location.
@@ -311,7 +317,7 @@ int main()
 	// Chooses a pivot and then repeatedly partitions the list into high and low parts, 
 	// each part unsorted, and then recursively sorts each part. 
 
-	// mergeSort(nums);
+	tester.mergeSort();
 	// Time - O( Nlog(N) ), Space - 
 
 	// shellSort(nums);
@@ -328,5 +334,6 @@ int main()
 	tester.selectionSort(true);
 	tester.insertionSort(true);
 	tester.quickSort(true);
+	tester.mergeSort(true);
 	return 0;
 }
