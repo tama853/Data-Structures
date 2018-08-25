@@ -20,8 +20,8 @@ private:
 	SimpleTimer* timer;
 	vector<T> numSorted;
 	vector<T> numUnsorted;
-	vector<T> nums;		   // temp vector that gets set within Set() since I
-						   // didn't want to repeat sort on each sorted algorithm version
+	vector<T> nums;		// temp vector that gets set within Set() since I
+				// didn't want to repeat sort on each sorted algorithm version
 
 public:
 	Test(unsigned int);
