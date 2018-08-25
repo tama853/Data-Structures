@@ -1,6 +1,7 @@
 #include "SimpleTimer.h"
 #include <iostream>
 #include <iomanip>
+
 using std::endl;
 using std::cout;
 using std::scientific;
