@@ -58,6 +58,7 @@ Test<T>::Test(unsigned int size)
 	}
 	else
 	{
+		// todo fix error checking
 		cout << "Invalid size, please rerun the programe with a size greater than 0." << endl;
 	}
 }
