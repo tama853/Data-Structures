@@ -66,8 +66,9 @@ Test<T>::Test(unsigned int size)
 template <typename T>
 void Test<T>::createVector(vector<T>& dataType, unsigned int _size)
 {
+	// todo add better randomization
 	srand(time(0));
-
+	
 	for (unsigned int i = 0; i < _size; i++)
 	{
 		dataType.push_back(rand() % _size); //random numbers
