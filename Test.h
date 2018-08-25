@@ -15,7 +15,6 @@ template <typename T>
 class Test
 {
 private:
-	// defaults to 1000
 	bool sorted = false;
 	unsigned int size;
 	SimpleTimer* timer;
