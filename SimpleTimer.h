@@ -3,9 +3,9 @@
 
 #include <chrono>
 #include <string>
-using std::string;
 using highResClock = std::chrono::high_resolution_clock; //alias
 using timePoint = highResClock::time_point;
+using std::string;
 
 class SimpleTimer
 {
