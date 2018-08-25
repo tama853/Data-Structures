@@ -25,7 +25,7 @@ private:
 						   // didn't want to repeat sort on each sorted algorithm version
 
 public:
-	Test(unsigned int size = 1000);
+	Test(const unsigned int size = 1000) : size(size);
 	void createVector(vector<T>&, unsigned int);
 	void Set(bool sorted = false);
 	void print(const vector<T>&);
