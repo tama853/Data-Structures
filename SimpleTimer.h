@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <string>
+
 using highResClock = std::chrono::high_resolution_clock; //alias
 using timePoint = highResClock::time_point;
 using std::string;
