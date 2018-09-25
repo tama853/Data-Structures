@@ -20,8 +20,8 @@ private:
 	SimpleTimer* timer;
 	vector<T> numSorted;
 	vector<T> numUnsorted;
-	vector<T> nums;		   // temp vector that gets set within Set() since I
-						   // didn't want to repeat sort on each sorted algorithm version
+	vector<T> nums;		// temp vector that gets set within Set() since I
+				// didn't want to repeat sort on each sorted algorithm version
 
 public:
 	Test(unsigned int);
@@ -58,6 +58,7 @@ Test<T>::Test(unsigned int size)
 	}
 	else
 	{
+		// todo fix error checking
 		cout << "Invalid size, please rerun the programe with a size greater than 0." << endl;
 	}
 }
@@ -65,8 +66,9 @@ Test<T>::Test(unsigned int size)
 template <typename T>
 void Test<T>::createVector(vector<T>& dataType, unsigned int _size)
 {
+	// todo add better randomization
 	srand(time(0));
-
+	
 	for (unsigned int i = 0; i < _size; i++)
 	{
 		dataType.push_back(rand() % _size); //random numbers
